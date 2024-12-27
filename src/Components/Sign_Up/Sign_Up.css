@@ -5,6 +5,8 @@
     padding: 40px; /* Add padding inside the container */
     margin-top: 10%; /* Set top margin as a percentage of the viewport height */
     overflow: hidden; /* Hide any overflowing content */
+    background-color: #f9f9f9; /* Set background color for the container */
+    border-radius: 4px; /* Add border radius for rounded corners */
 }
 
 /* Styles for the password visibility icon */

@@ -18,7 +18,7 @@ const Navbar = () => {
         <div>
             <nav>
                 <div className="nav__logo">
-                    <a href="/">
+                    <Link to="/">
                         StayHealthy 
                          
                         <svg
@@ -39,7 +39,7 @@ const Navbar = () => {
       fill="#2875A4"
     />
   </svg>
-                    </a>
+                    </Link>
                     <span>.</span>
                 </div>
                 <div className="nav__icon" onClick={handleClick}>
@@ -48,15 +48,15 @@ const Navbar = () => {
 
                 <ul className="nav__links active">
                     <li className="link">
-                        <a href="../Landing_Page/LandingPage.html">Home</a>
+                        <Link to="/">Home</Link>
                     </li>
                     <li className="link">
-                        <a href="#">Appointments</a>
+                        <Link to="#">Appointments</Link>
                     </li>
                     <li className="link">
-                        <a href="../Sign_Up//Sign_Up.html">
+                        <Link to="/signup">
                             <button className="btn1">Sign Up</button>
-                        </a>
+                        </Link>
                     </li>
                     <li className="link">
                         <Link to="/login"><button className="btn1">Login</button></Link>
