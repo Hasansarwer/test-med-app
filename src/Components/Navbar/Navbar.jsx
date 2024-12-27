@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -58,9 +59,8 @@ const Navbar = () => {
                         </a>
                     </li>
                     <li className="link">
-                        <a href="../Login/Login.html">
-                            <button className="btn1">Login</button>
-                        </a>
+                        <Link to="/login"><button className="btn1">Login</button></Link>
+                        
                     </li>
                 </ul>
             </nav>

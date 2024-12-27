@@ -4,6 +4,8 @@
     margin: 0 auto; /* Center the container horizontally */
     padding: 40px; /* Padding inside the container */
     margin-top: 10%; /* Top margin of 10% */
+    background-color: #f9f9f9; /* Background color of the container */
+    border-radius: 4px; /* Border radius for rounded corners */
 }
 
 /* Styles for form groups */
@@ -16,6 +18,7 @@
     display: block; /* Make labels display as block elements */
     margin-bottom: 5px; /* Bottom margin for spacing below labels */
     font-weight: bold; /* Bold text for labels */
+    text-align: left; /* Align labels to the left */
 }
 
 /* Styles for form controls */
@@ -53,3 +56,14 @@
     background-color: #dc3545; /* Background color for danger buttons */
     color: #fff; /* Text color for danger buttons */
 }
+
+.form-group input{
+    width: 100%;
+}
+
+.text-danger {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+    display: block;
+  }
