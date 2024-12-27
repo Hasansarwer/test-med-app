@@ -18,6 +18,9 @@ const Sign_Up = () => {
         if (!formData.phone) {    // If phone is empty
             formIsValid = false;    // Set formIsValid to false
             newErrors.phone = 'Phone is required.';    // Set newErrors.phone to 'Phone is required.'
+        } else if (!/^\d{10}$/.test(formData.phone)) {    // If phone is not exactly 10 digits
+            formIsValid = false;    // Set formIsValid to false
+            newErrors.phone = 'Phone number must be exactly 10 digits.';    // Set newErrors.phone to 'Phone number must be exactly 10 digits.'
         }
 
         if (!formData.email) {    // If email is empty
@@ -121,6 +124,7 @@ const Sign_Up = () => {
                         <label htmlFor="password">Password</label> 
                         <input 
                             name="password" 
+                            type="password"
                             id="password"   
                             required 
                             className="form-control" 
