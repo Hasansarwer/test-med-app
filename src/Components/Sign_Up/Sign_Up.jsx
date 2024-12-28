@@ -1,10 +1,51 @@
-import { Link } from "react-router-dom";    // Importing Link from react-router-dom
+import { Link, useNavigate } from "react-router-dom";    // Importing Link from react-router-dom
 import './Sign_Up.css';                     // Importing Sign_Up.css file
 import { useState } from 'react';            // Importing useState from react
+import { API_URL } from "../../../config";
 
 const Sign_Up = () => { 
     const [formData, setFormData] = useState({name: '', phone: '', email: '', password: ''});    // Initializing formData state variable with name, phone, email, password
-    const [errors, setErrors] = useState({name: '', phone: '', email: '', password: ''});         // Initializing errors state variable with name, phone, email, password
+    const [errors, setErrors] = useState({name: '', phone: '', email: '', password: ''});    // Initializing errors state variable with name, phone, email, password
+    const [showError, setShowError] = useState("");    // Initializing showError state variable with empty string
+    const navigate = useNavigate();
+
+    const register = async () => {    // Defining register function
+
+        const response = await fetch(`${API_URL}/api/auth/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: formData.name,
+                phone: formData.phone,
+                email: formData.email,
+                password: formData.password
+            }),
+        });
+
+        const json = await response.json();
+
+        if (json.authtoken) {
+            sessionStorage.setItem('authtoken', json.authtoken);
+            sessionStorage.setItem('name', formData.name);
+            sessionStorage.setItem('email', formData.email);
+            sessionStorage.setItem('phone', formData.phone);
+
+            navigate('/');
+            window.location.reload();
+        } else {
+            if (json.errors) {
+                
+                for (const error of json.errors) {
+                    setShowError(error.msg);
+                }
+            } else {
+                setShowError(json.error)
+            }
+        }
+    };
+
 
     const validateForm = () => {    // Defining validateForm function
         let formIsValid = true;     // Initializing formIsValid variable with true
@@ -48,7 +89,7 @@ const Sign_Up = () => {
     const handleSubmit = (e) => {    // Defining handleSubmit function
         e.preventDefault();    // Preventing default form submission
         if (validateForm()) {    // If validateForm returns true
-            console.log('Valid Form');    // Log 'Valid Form'
+            register();    // Call register function
         } else {    // If validateForm returns false
             console.log('Invalid Form');    // Log 'Invalid Form'
         }
@@ -136,7 +177,9 @@ const Sign_Up = () => {
                             {errors.password && <div className="text-danger">{errors.password}</div>}
                     </div>
 
+
                     <div className="btn-group"> 
+                        {showError && <div className="text-danger">{showError}</div>}
                         <button type="submit" className="btn btn-primary mb-2 mr-1 waves-effect waves-light">Submit</button> 
                         <button 
                             type="reset" 
