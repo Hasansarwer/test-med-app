@@ -38,8 +38,8 @@ const Navbar = () => {
     console.log(isLoggedIn, username, email);
     useEffect(() => {
         const token = sessionStorage.getItem("authtoken");
-        const name = sessionStorage.getItem("name");
         const email = sessionStorage.getItem("email");
+        const name = email.split('@')[0];
         console.log(token);
         if (token) {
             setIsLoggedIn(true);

@@ -1,45 +1,42 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
 import { useState } from 'react';
+import { API_URL } from '../../../config';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState({ email: '', password: '' });
 
-  const validateForm = () => {
-    let formIsValid = true;
-    const newErrors = { email: '', password: '' };
+  const navigate = useNavigate();
 
-    if (!email) {
-      formIsValid = false;
-      newErrors.email = 'Email is required.';
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      formIsValid = false;
-      newErrors.email = 'Email is invalid.';
-    }
-
-    //password validation
-    if (!password) {
-      formIsValid = false;
-      newErrors.password = 'Password is required.';
-    } else if (password.length < 6) {
-      formIsValid = false;
-      newErrors.password = 'Password must be at least 6 characters long.';
-    }
-
-    setErrors(newErrors);
-    return formIsValid;
-  }
-
-  const handleSubmit = (e) => {
+  const login = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      console.log('Valid Form');
+    const response = await fetch(`${API_URL}/api/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
+
+    const json = await response.json();
+    console.log(json);
+    if (json.authtoken) {
+      sessionStorage.setItem('authtoken', json.authtoken);
+      sessionStorage.setItem('email', email);
+      
+      navigate('/');
+      // window.location.reload();
     } else {
-      console.log('Invalid Form');
+      if (json.error) {
+        alert(json.error);
+      }
     }
-  }
+
+  };
     return (
         <div className="container">
     
@@ -55,7 +52,7 @@ const Login = () => {
           <br />
         
           <div className="login-form">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={login}>
               
               <div className="form-group">
                 <label htmlFor="email">Email</label>
@@ -64,7 +61,7 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 aria-describedby="helpId" />
-                {errors.email && <div className="text-danger">{errors.email}</div>}
+                
               </div>
               
               <div className="form-group">
@@ -79,7 +76,7 @@ const Login = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                {errors.password && <span className="text-danger">{errors.password}</span>}
+                
               </div>
              
               <div className="btn-group">
@@ -89,7 +86,6 @@ const Login = () => {
                     onClick={() => {
                       setEmail('');
                       setPassword('');
-                      setErrors({ email: '', password: '' });
                     }}
                     >Reset
                 </button>
