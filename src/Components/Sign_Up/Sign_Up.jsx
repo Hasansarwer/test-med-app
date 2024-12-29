@@ -5,12 +5,12 @@ import { API_URL } from "../../../config";
 
 const Sign_Up = () => { 
     const [formData, setFormData] = useState({name: '', phone: '', email: '', password: ''});    // Initializing formData state variable with name, phone, email, password
-    // const [errors, setErrors] = useState({name: '', phone: '', email: '', password: ''});    // Initializing errors state variable with name, phone, email, password
-    const [showError, setShowError] = useState("");    // Initializing showError state variable with empty string
+    const [errors, setErrors] = useState({name: '', phone: '', email: '', password: ''});    // Initializing errors state variable with name, phone, email, password
+    // const [showError, setShowError] = useState("");    // Initializing showError state variable with empty string
     const navigate = useNavigate();
 
-    const register = async () => {    // Defining register function
-
+    const register = async (e) => {    // Defining register function
+        e.preventDefault();    // Preventing default form submission
         const response = await fetch(`${API_URL}/api/auth/register`, {
             method: 'POST',
             headers: {
@@ -35,65 +35,21 @@ const Sign_Up = () => {
             navigate('/');
             window.location.reload();
         } else {
-            if (json.errors) {
-                
-                for (const error of json.errors) {
-                    setShowError(error.msg);
+            if (json.error) {
+                setErrors({name: '', phone: '', email: '', password: ''});
+                for (const error of json.error) {
+                    setErrors((prev) => {
+                        return {
+                            ...prev,
+                            [error.param]: error.msg
+                        }
+                    })
                 }
             } else {
-                setShowError(json.error)
+                setErrors(json.error)
             }
         }
     };
-
-
-    const validateForm = () => {    // Defining validateForm function
-        let formIsValid = true;     // Initializing formIsValid variable with true
-        const newErrors = {name: '', phone: '', email: '', password: ''};    // Initializing newErrors variable with name, phone, email, password
-
-        if (!formData.name) {    // If name is empty
-            formIsValid = false;    // Set formIsValid to false
-            newErrors.name = 'Name is required.';    // Set newErrors.name to 'Name is required.'
-        }
-
-        if (!formData.phone) {    // If phone is empty
-            formIsValid = false;    // Set formIsValid to false
-            newErrors.phone = 'Phone is required.';    // Set newErrors.phone to 'Phone is required.'
-        } else if (!/^\d{10}$/.test(formData.phone)) {    // If phone is not exactly 10 digits
-            formIsValid = false;    // Set formIsValid to false
-            newErrors.phone = 'Phone number must be exactly 10 digits.';    // Set newErrors.phone to 'Phone number must be exactly 10 digits.'
-        }
-
-        if (!formData.email) {    // If email is empty
-            formIsValid = false;    // Set formIsValid to false
-            newErrors.email = 'Email is required.';    // Set newErrors.email to 'Email is required.'
-        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {    // If email is not in email format
-            formIsValid = false;    // Set formIsValid to false
-            newErrors.email = 'Email is invalid.';    // Set newErrors.email to 'Email is invalid.'
-        }
-
-        if (!formData.password) {    // If password is empty
-            formIsValid = false;    // Set formIsValid to false
-            newErrors.password = 'Password is required.';    // Set newErrors.password to 'Password is required.'
-        } else if (formData.password.length < 6) {    // If password length is less than 6
-            formIsValid = false;    // Set formIsValid to false
-            newErrors.password = 'Password must be at least 6 characters long.';    // Set newErrors.password to 'Password must be at least 6 characters long.'
-        }
-
-        setErrors(newErrors);    // Set errors to newErrors
-        return formIsValid;    // Return formIsValid
-    }
-
-  
-
-    const handleSubmit = (e) => {    // Defining handleSubmit function
-        e.preventDefault();    // Preventing default form submission
-        // if (validateForm()) {    // If validateForm returns true
-            register();    // Call register function
-        // } else {    // If validateForm returns false
-            // console.log('Invalid Form');    // Log 'Invalid Form'
-        // }
-    }
 
     const updateData = (prevData, e) =>{
         return {
@@ -111,7 +67,7 @@ const Sign_Up = () => {
                 Already a member? <span><Link to="/login" style={{color: '#2190FF'}}> Login</Link></span>
             </div>
             <div className="signup-form"> 
-                <form onSubmit={handleSubmit}> 
+                <form onSubmit={register}> 
 
                     <div className="form-group"> 
                         <label htmlFor="name">Name</label> 
@@ -126,7 +82,7 @@ const Sign_Up = () => {
                             value={formData.name}
                             onChange={(e) => setFormData(updateData(formData, e))}
                             /> 
-                            {/* {errors.name && <div className="text-danger">{errors.name}</div>} */}
+                            {errors.name && <div className="text-danger">{errors.name}</div>}
                     </div>
 
                     <div className="form-group"> 
@@ -142,7 +98,7 @@ const Sign_Up = () => {
                             value={formData.phone}
                             onChange={(e) => setFormData(updateData(formData, e))}
                             /> 
-                            {/* {errors.phone && <div className="text-danger">{errors.phone}</div>} */}
+                            {errors.phone && <div className="text-danger">{errors.phone}</div>}
                     </div>
 
                     <div className="form-group"> 
@@ -158,7 +114,7 @@ const Sign_Up = () => {
                             value={formData.email}
                             onChange={(e) => setFormData(updateData(formData, e))}
                             /> 
-                            {/* {errors.email && <div className="text-danger">{errors.email}</div>} */}
+                            {errors.email && <div className="text-danger">{errors.email}</div>}
                     </div>
 
                     <div className="form-group"> 
@@ -174,12 +130,12 @@ const Sign_Up = () => {
                             value={formData.password}
                             onChange={(e) => setFormData(updateData(formData, e))}
                              /> 
-                            {/* {errors.password && <div className="text-danger">{errors.password}</div>} */}
+                            {errors.password && <div className="text-danger">{errors.password}</div>}
                     </div>
 
 
                     <div className="btn-group"> 
-                        {showError && <div className="text-danger">{showError}</div>}
+                        {/* {showError && <div className="text-danger">{showError}</div>} */}
                         <button type="submit" className="btn btn-primary mb-2 mr-1 waves-effect waves-light">Submit</button> 
                         <button 
                             type="reset" 
