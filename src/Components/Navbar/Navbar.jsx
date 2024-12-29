@@ -1,19 +1,53 @@
 import { Link } from 'react-router-dom';
 import './Navbar.css';
+import { useEffect, useState } from 'react';
 
 const Navbar = () => {
-    const handleClick = () => {
-        const navLinks = document.querySelector('.nav__links');
-        const links = document.querySelectorAll('.nav__links li');
-        navLinks.classList.toggle('active');
-        links.forEach((link, index) => {
-            if (link.style.animation) {
-                link.style.animation = '';
-            } else {
-                link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.5}s`;
-            }
-        });
-    };
+    const [click, setClick] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [showDropdown, setShowDropdown] = useState(false);
+
+    const handleClick = () => setClick(!click);
+    
+    const handleLogout = () => {
+        sessionStorage.removeItem("authtoken");
+        sessionStorage.removeItem("name");
+        sessionStorage.removeItem("email");
+        sessionStorage.removeItem("phone");
+        // remove email phone
+        localStorage.removeItem("doctorData");
+        setIsLoggedIn(false);
+        // setUsername("");
+       
+        // Remove the reviewFormData from local storage
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          if (key.startsWith("reviewFormData_")) {
+            localStorage.removeItem(key);
+          }
+        }
+        setEmail('');
+        setUsername('');
+        window.location.reload();
+    }
+    const handleDropdown = () => {
+      setShowDropdown(!showDropdown);
+    }
+    console.log(isLoggedIn, username, email);
+    useEffect(() => {
+        const token = sessionStorage.getItem("authtoken");
+        const name = sessionStorage.getItem("name");
+        const email = sessionStorage.getItem("email");
+        console.log(token);
+        if (token) {
+            setIsLoggedIn(true);
+            setUsername(name);
+            setEmail(email);
+        }
+    }, []);
+
     return (
         <div>
             <nav>
@@ -53,13 +87,13 @@ const Navbar = () => {
                     <li className="link">
                         <Link to="#">Appointments</Link>
                     </li>
-                    <li className="link">
+                    {isLoggedIn? <li><h3 className='welcome-user'> Welcome, {username}</h3></li>:<li className="link">
                         <Link to="/signup">
                             <button className="btn1">Sign Up</button>
                         </Link>
-                    </li>
+                    </li>}
                     <li className="link">
-                        <Link to="/login"><button className="btn1">Login</button></Link>
+                        {isLoggedIn ? <Link to="#"><button className="btn2" onClick={handleLogout}>Logout</button></Link>:<Link to="/login"><button className="btn1">Login</button></Link>}
                         
                     </li>
                 </ul>
