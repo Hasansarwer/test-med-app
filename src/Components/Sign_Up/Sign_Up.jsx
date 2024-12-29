@@ -5,7 +5,7 @@ import { API_URL } from "../../../config";
 
 const Sign_Up = () => { 
     const [formData, setFormData] = useState({name: '', phone: '', email: '', password: ''});    // Initializing formData state variable with name, phone, email, password
-    const [errors, setErrors] = useState({name: '', phone: '', email: '', password: ''});    // Initializing errors state variable with name, phone, email, password
+    // const [errors, setErrors] = useState({name: '', phone: '', email: '', password: ''});    // Initializing errors state variable with name, phone, email, password
     const [showError, setShowError] = useState("");    // Initializing showError state variable with empty string
     const navigate = useNavigate();
 
@@ -88,11 +88,11 @@ const Sign_Up = () => {
 
     const handleSubmit = (e) => {    // Defining handleSubmit function
         e.preventDefault();    // Preventing default form submission
-        if (validateForm()) {    // If validateForm returns true
+        // if (validateForm()) {    // If validateForm returns true
             register();    // Call register function
-        } else {    // If validateForm returns false
-            console.log('Invalid Form');    // Log 'Invalid Form'
-        }
+        // } else {    // If validateForm returns false
+            // console.log('Invalid Form');    // Log 'Invalid Form'
+        // }
     }
 
     const updateData = (prevData, e) =>{
@@ -126,7 +126,7 @@ const Sign_Up = () => {
                             value={formData.name}
                             onChange={(e) => setFormData(updateData(formData, e))}
                             /> 
-                            {errors.name && <div className="text-danger">{errors.name}</div>}
+                            {/* {errors.name && <div className="text-danger">{errors.name}</div>} */}
                     </div>
 
                     <div className="form-group"> 
@@ -142,7 +142,7 @@ const Sign_Up = () => {
                             value={formData.phone}
                             onChange={(e) => setFormData(updateData(formData, e))}
                             /> 
-                            {errors.phone && <div className="text-danger">{errors.phone}</div>}
+                            {/* {errors.phone && <div className="text-danger">{errors.phone}</div>} */}
                     </div>
 
                     <div className="form-group"> 
@@ -158,7 +158,7 @@ const Sign_Up = () => {
                             value={formData.email}
                             onChange={(e) => setFormData(updateData(formData, e))}
                             /> 
-                            {errors.email && <div className="text-danger">{errors.email}</div>}
+                            {/* {errors.email && <div className="text-danger">{errors.email}</div>} */}
                     </div>
 
                     <div className="form-group"> 
@@ -174,7 +174,7 @@ const Sign_Up = () => {
                             value={formData.password}
                             onChange={(e) => setFormData(updateData(formData, e))}
                              /> 
-                            {errors.password && <div className="text-danger">{errors.password}</div>}
+                            {/* {errors.password && <div className="text-danger">{errors.password}</div>} */}
                     </div>
 
 
