@@ -5,13 +5,14 @@ import Landing_Page from './Components/Landing_Page/Landing_Page'
 import Login from './Components/Login/Login'
 import Sign_Up from './Components/Sign_Up/Sign_Up'
 import InstantConsultation from './Components/InstantConsultationBooking/InstantConsultation'
-
+import Notifications from './Components/Notification/Notification'
 function App() {
 
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
+        {/* <Navbar /> */}
+        <Notifications />
         <Routes>
           <Route path="/" element={<Landing_Page />} />
           <Route path="/login" element={<Login />} />
