@@ -35,7 +35,7 @@ const Navbar = () => {
     const handleDropdown = () => {
       setShowDropdown(!showDropdown);
     }
-    console.log(isLoggedIn, username, email);
+    
     useEffect(() => {
         const token = sessionStorage.getItem("authtoken");
         const email = sessionStorage.getItem("email");

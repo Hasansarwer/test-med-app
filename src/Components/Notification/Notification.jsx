@@ -9,7 +9,7 @@ const Notification = ({ children }) => {
   const [username, setUsername] = useState("");
   const [doctorData, setDoctorData] = useState(null);
   const [appointmentData, setAppointmentData] = useState(null);
-
+  console.log(children)
   // useEffect hook to perform side effects in the component
   useEffect(() => {
     // Retrieve stored username, doctor data, and appointment data from sessionStorage and localStorage
@@ -42,6 +42,7 @@ const Notification = ({ children }) => {
       {/* Render children components */}
       {children}
       {/* Display appointment details if user is logged in and appointmentData is available */}
+      {console.log(children, isLoggedIn, appointmentData)}
       {isLoggedIn && appointmentData && (
         <>
           <div className="appointment-card">
