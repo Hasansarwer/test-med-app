@@ -1,18 +1,30 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import './AppointmentForm.css';
 
 const AppointmentForm = ({ doctorName, doctorSpeciality, onSubmit }) => {
     const [name, setName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [date, setDate] = useState('');
     const [selectedSlot, setSelectedSlot] = useState(null);
+
+    const timeSlots = [
+      "09:00 AM",
+      "10:00 AM",
+      "11:00 AM",
+      "12:00 PM",
+      "01:00 PM",
+      "02:00 PM",
+      "03:00 PM",
+      "04:00 PM",
+    ];
   
-    const handleSlotSelection = (slot) => {
-      setSelectedSlot(slot);
-    };
+    // const handleSlotSelection = (slot) => {
+    //   setSelectedSlot(slot);
+    // };
   
     const handleFormSubmit = (e) => {
       e.preventDefault();
-      onSubmit({ name, phoneNumber });
+      onSubmit({ name, phoneNumber, date, selectedSlot });
       setName('');
       setPhoneNumber('');
     };
@@ -49,16 +61,27 @@ const AppointmentForm = ({ doctorName, doctorSpeciality, onSubmit }) => {
           required
           /></div>
         <div className="form-group">
-          <label htmlFor="selectSlot">Book Time Slot:</label>
-          <input 
-          type="time" 
-          id="selectSlot"
-          min="09:00"
-          max="17:00"
-          value={selectedSlot}
-          onChange={(e) => setSelectedSlot(e.target.value)}
-          required
-          /></div>
+      <label htmlFor="selectSlot">Book Time Slot:</label>
+      <select
+        id="selectSlot"
+        value={selectedSlot}
+        onChange={(e) => setSelectedSlot(e.target.value)}
+        required
+      >
+        <option value="">Select a time slot</option>
+        {timeSlots.map((slot, index) => (
+          <option key={index} value={slot}>
+            {slot}
+          </option>
+        ))}
+      </select>
+
+      {selectedSlot && (
+        <p>
+          You have selected: <strong>{selectedSlot}</strong>
+        </p>
+      )}
+    </div>
         <button type="submit">Book Now</button>
       </form>
     );
