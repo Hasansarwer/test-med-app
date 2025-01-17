@@ -179,4 +179,32 @@ nav {
     background-color:#3685fb; /* Hover effect */
     color:white; /* Hover effect */
 }
-  
+
+.dropdown-menu{
+    display: none;
+    position: relative;
+    background-color: white;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.dropdown-menu li{
+    margin: 5px 0;
+}
+
+.dropdown-menu li a{
+    text-decoration: none;
+    color: #333;
+}
+
+.dropdown-menu li a:hover {
+    color: #007BFF;
+}
+
+
+li:hover .dropdown-menu {
+    display: block;
+}
