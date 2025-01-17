@@ -8,6 +8,7 @@ import Notifications from './Components/Notification/Notification'
 import ReviewForm from './Components/ReviewForm/ReviewForm'
 import GiveReviews from './Components/GiveReviews/GiveReviews'
 import ProfileCard from './Components/ProfileCard/ProfileCard'
+import PatientReport from './Components/PatientReport/PatientReport'
 function App() {
 
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path='/review' element = {<ReviewForm />} />
           <Route path='/giveReview/:id' element = {<GiveReviews />} />
           <Route path='/profile' element = {<ProfileCard />} />
+          <Route path='/reports' element = {<PatientReport />}/>
           <Route path='*' element={<h1>404 Not Found</h1>} />
         </Routes>
       </BrowserRouter>
