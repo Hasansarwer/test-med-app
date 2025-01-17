@@ -180,7 +180,7 @@ nav {
     color:white; /* Hover effect */
 }
 
-.dropdown-menu{
+/* .dropdown-menu{
     display: none;
     position: relative;
     background-color: white;
@@ -207,4 +207,4 @@ nav {
 
 li:hover .dropdown-menu {
     display: block;
-}
+} */

@@ -70,10 +70,11 @@ const Navbar = () => {
                         <Link to="/instant-consultation">Appointments</Link>
                     </li>
                     {isLoggedIn? (
-                        <li>
-                            <h3 className='welcome-user'> Welcome, {username}</h3>
+                        <li className='welcome-user'>
+                            <h3 > Welcome, {username}</h3>
                             <ul className="dropdown-menu">
-                                <li><a href="/profile">Profile</a></li>
+                                <li><a href="/profile">Your Profile</a></li>
+                                <li><a href="/reports">Your Reports</a></li>
                             </ul>
                         </li>):
                     <li className="link">
